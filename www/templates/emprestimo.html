@@ -4,14 +4,13 @@
       Ler Qr-Code do livro
     </button>
 
-    <div class="list card" ng-show="vm.livro != ''">
+    <div class="list card" ng-show="!  vm.livro != ''">
 
       <div class="item item-thumbnail-left">
-        <img src="/www/img/livro-sem-capa.jpg">
+        <img src="/img/livros-sem-capa.jpg">
 
         <h2>{{vm.livro.titulo ? vm.livro.titulo : 'Título do livro desconhecido'}}</h2>
         <hr>
-        <!--TODO: Lista de autores-->
         <div ng-if="vm.livro.autores.length">
           <li ng-repeat="autor in vm.livro.autores">
             {{autor.nome}}
@@ -32,7 +31,8 @@
 
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item" href="#"><i class="icon ion-chatbox"></i>Comentar</a>
-        <!--<a class="tab-item" href="#" ng-click="vm."><i class="icon ion-arrow-return-right"></i>Locar</a>-->
+        <a class="tab-item" href="#"><i class="icon ion-ios-download"></i>Locar</a>
+        <a class="tab-item" href="#"><i class="icon ion-ios-upload"></i>Devolver</a>
       </div>
     </div>
 
