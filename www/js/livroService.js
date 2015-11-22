@@ -7,7 +7,7 @@
 
   function LivroFactory($http, $q) {
 
-    var url = "http://192.168.1.203:8080/api/livro/";
+    var url = "http://192.168.0.15:8080/api/livro/";
 
     function getById(id) {
       var d = $q.defer();
