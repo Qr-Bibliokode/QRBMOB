@@ -19,6 +19,7 @@
         } else {
           console.log("Usuário logado");
           LoginService.logado(true);
+          LoginService.setUsuarioLogado(vm.user);
           $scope.modal.hide();
           console.log(LoginService.isLogado())
         }

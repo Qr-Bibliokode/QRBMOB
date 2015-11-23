@@ -3,15 +3,14 @@
 
   angular
     .module('starter')
-    .factory('LivroFactory', ['$http', '$q', LivroFactory]);
+    .factory('LivroFactory', ['$http', '$q', 'ResourcesFactory', LivroFactory]);
 
-  function LivroFactory($http, $q) {
-
-    var url = "http://192.168.0.15:8080/api/livro/";
+  /** @ngInject */
+  function LivroFactory($http, $q, ResourcesFactory) {
 
     function getById(id) {
       var d = $q.defer();
-      $http.get(url + id).then(function (response, $q) {
+      $http.get(ResourcesFactory.LIVROS_API + id).then(function (response, $q) {
           d.resolve(response);
         },
         function (data) {

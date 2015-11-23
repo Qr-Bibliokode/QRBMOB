@@ -3,14 +3,23 @@
 
   angular
     .module('starter')
-    .factory('LoginService', ['$http', '$q', LoginService]);
+    .factory('LoginService', ['$http', '$q', 'ResourcesFactory', LoginService]);
 
-  function LoginService($http, $q) {
+  /** @ngInject */
+  function LoginService($http, $q, ResourcesFactory) {
 
-    var url = "http://192.168.0.15:8080/api/contaUsuario/";
     var vm = this;
 
+    vm.usuario = '';
     vm.usuarioLogado = false;
+
+    function setUsuarioLogado(usuario) {
+      vm.usuario = usuario;
+    }
+
+    function getUsuarioLogado() {
+      return vm.usuario;
+    }
 
     function logado(logado) {
       vm.usuarioLogado = logado;
@@ -22,7 +31,7 @@
 
     function validaUsuario(user) {
       var d = $q.defer();
-      $http.get(url + "validaUsuario?username=" + user.username + "&password=" + user.password).then(function (response, $q) {
+      $http.get(ResourcesFactory.CONTA_USUARIOS_API + "validaUsuario?username=" + user.username + "&password=" + user.password).then(function (response, $q) {
           d.resolve(response);
         },
         function (data) {
@@ -34,7 +43,9 @@
     return {
       logado: logado,
       isLogado: isLogado,
-      validaUsuario: validaUsuario
+      validaUsuario: validaUsuario,
+      getUsuarioLogado: getUsuarioLogado,
+      setUsuarioLogado: setUsuarioLogado
     };
   }
 })();

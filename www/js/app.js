@@ -74,3 +74,4 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       });
     $urlRouterProvider.otherwise('/app/historico');
   });
+
