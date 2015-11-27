@@ -18,16 +18,19 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
+        <ion-item menu-close href="#/app/noticias">
+          Noticias
+        </ion-item>
         <ion-item menu-close ng-click="login()">
           Login
         </ion-item>
-        <ion-item menu-close href="#/app/consulta">
+        <ion-item ng-show="isLogado()"menu-close href="#/app/consulta">
           Consulta
         </ion-item>
         <ion-item ng-show="isLogado()" menu-close href="#/app/emprestimo">
           Emprestimo
         </ion-item>
-        <ion-item menu-close href="#/app/historico">
+        <ion-item ng-show="isLogado()" menu-close href="#/app/historico">
           Histórico
         </ion-item>
       </ion-list>

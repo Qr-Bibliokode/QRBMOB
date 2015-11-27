@@ -63,6 +63,17 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       })
 
+      .state('app.noticias', {
+        url: '/noticias',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/noticias.html',
+            controller: 'NoticiasController',
+            controllerAs: 'vm'
+          }
+        }
+      })
+
       .state('app.detalheConsultaLivro', {
         url: '/detalheConsultaLivro/:playlistId',
         views: {
@@ -71,7 +82,30 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             controller: 'DetalheConsultaLivroCtrl'
           }
         }
+      })
+
+      .state('app.detalheNoticia', {
+        url: '/detalheNoticia/:noticiaId',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/detalheNoticia.html',
+            controller: 'NoticiasController',
+            controllerAs: 'vm'
+          }
+        }
+      })
+
+      .state('app.livrosLocados', {
+        url: '/livrosLocados/:idConta',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/livrosLocados.html',
+            controller: 'LivrosLocadosController',
+            controllerAs: 'vm'
+          }
+        }
       });
-    $urlRouterProvider.otherwise('/app/historico');
+
+    $urlRouterProvider.otherwise('/app/noticias');
   });
 
