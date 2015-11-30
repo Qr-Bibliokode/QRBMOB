@@ -1,111 +1,74 @@
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-  .run(function ($ionicPlatform) {
-    $ionicPlatform.ready(function () {
-      if (window.cordova && window.cordova.plugins.Keyboard) {
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        cordova.plugins.Keyboard.disableScroll(true);
+    .run(function ($ionicPlatform) {
+        $ionicPlatform.ready(function () {
+            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                cordova.plugins.Keyboard.disableScroll(true);
 
-      }
-      if (window.StatusBar) {
-        StatusBar.styleDefault();
-      }
+            }
+            if (window.StatusBar) {
+                StatusBar.styleDefault();
+            }
+        });
+    })
+
+    .config(function ($stateProvider, $urlRouterProvider) {
+
+        $stateProvider
+
+            .state('tab', {
+                url: '/tab',
+                abstract: true,
+                templateUrl: 'templates/tabs.html',
+                controller: 'LoginCtrl',
+                controllerAs: 'vm'
+            })
+
+            .state('tab.home', {
+                url: '/home',
+                views: {
+                    'tab-home': {
+                        templateUrl: 'templates/tab-home.html',
+                        controller: 'LoginCtrl',
+                        controllerAs: 'vm'
+                    }
+                }
+            })
+
+            .state('tab.emprestimos', {
+                url: '/emprestimos',
+                views: {
+                    'tab-emprestimos': {
+                        templateUrl: 'templates/tab-emprestimos.html',
+                        controller: 'EmprestimosCtrl',
+                        controllerAs: 'vm'
+                    }
+                }
+            })
+
+            .state('tab.emprestimo-detalhes', {
+                url: '/emprestimos/:emprestimoId',
+                views: {
+                    'tab-emprestimos': {
+                        templateUrl: 'templates/emprestimo-detalhes.html',
+                        controller: 'EmprestimoDetalhesCtrl',
+                        controllerAs: 'vm'
+                    }
+                }
+            })
+
+            .state('tab.account', {
+                url: '/account',
+                views: {
+                    'tab-account': {
+                        templateUrl: 'templates/tab-account.html',
+                        controller: 'AccountCtrl',
+                        controllerAs: 'vm'
+                    }
+                }
+            });
+
+        $urlRouterProvider.otherwise('/tab/home');
+
     });
-  })
-
-  .config(function ($stateProvider, $urlRouterProvider) {
-    $stateProvider
-
-      .state('app', {
-        url: '/app',
-        abstract: true,
-        templateUrl: 'templates/menu.html',
-        controller: 'AppCtrl'
-      })
-
-      .state('app.consulta', {
-        url: '/consulta',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/consulta.html'
-          }
-        }
-      })
-
-      .state('app.emprestimo', {
-        url: '/emprestimo',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/emprestimo.html'
-          }
-        }
-      })
-
-      .state('app.historico', {
-        url: '/historico',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/historico.html',
-            controller: 'AppCtrl',
-            controllerAS: 'vm'
-          }
-        }
-      })
-
-      .state('app.login', {
-        url: '/login',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/login.html',
-            controller: 'LoginController',
-            controllerAs: 'vm'
-          }
-        }
-      })
-
-      .state('app.noticias', {
-        url: '/noticias',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/noticias.html',
-            controller: 'NoticiasController',
-            controllerAs: 'vm'
-          }
-        }
-      })
-
-      .state('app.detalheConsultaLivro', {
-        url: '/detalheConsultaLivro/:playlistId',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/detalheConsultaLivro.html',
-            controller: 'DetalheConsultaLivroCtrl'
-          }
-        }
-      })
-
-      .state('app.detalheNoticia', {
-        url: '/detalheNoticia/:noticiaId',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/detalheNoticia.html',
-            controller: 'NoticiasController',
-            controllerAs: 'vm'
-          }
-        }
-      })
-
-      .state('app.livrosLocados', {
-        url: '/livrosLocados/:idConta',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/livrosLocados.html',
-            controller: 'LivrosLocadosController',
-            controllerAs: 'vm'
-          }
-        }
-      });
-
-    $urlRouterProvider.otherwise('/app/noticias');
-  });
-
