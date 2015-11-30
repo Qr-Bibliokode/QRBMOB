@@ -1,0 +1,25 @@
+<ion-view view-title="Menú inicial">
+    <ion-content class="padding">
+        <div class="card" ng-show="!vm.isLogado()">
+            <form ng-submit="vm.login()">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">Login</span>
+                        <input type="text" ng-model="vm.user.username">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Senha</span>
+                        <input type="password" ng-model="vm.user.password">
+                    </label>
+                    <label class="item">
+                        <button class="button button-block button-positive" type="submit">Entrar</button>
+                        {{vm.user.id}}
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="card" ng-show="vm.isLogado()">
+            <h1>Notícias da biblioteca</h1>
+        </div>
+    </ion-content>
+</ion-view>
