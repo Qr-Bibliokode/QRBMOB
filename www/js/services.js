@@ -125,7 +125,7 @@ angular.module('starter.services', [])
     })
 
     .factory('ResourcesFactory', function () {
-        //var resource = 'http://192.168.0.15:8080/';
+        //var resource = 'http://192.168.0.15:8080/'; // Use este endereço para rodar localmente
         var resource = 'http://ws.qrbcode.com.br:8080/';
 
 

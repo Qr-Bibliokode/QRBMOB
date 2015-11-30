@@ -84,13 +84,13 @@ angular.module('starter.controllers', [])
             });
         };
 
-        vm.buscaLivro = function () {
-            LivroFactory.getById(4).then(function (response) {
-                vm.livro = response.data;
-            }, function (data) {
-                alert("Erro: " + data);
-            });
-        };
+        //vm.buscaLivro = function () {
+        //    LivroFactory.getById(4).then(function (response) {
+        //        vm.livro = response.data;
+        //    }, function (data) {
+        //        alert("Erro: " + data);
+        //    });
+        //};
     })
 
     .controller('EmprestimoDetalhesCtrl', function ($stateParams, EmprestimoService) {
