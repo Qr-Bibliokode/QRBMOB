@@ -1,32 +1,7 @@
 angular.module('starter.services', [])
 
     .factory('EmprestimoService', function ($http, $q, ResourcesFactory) {
-        var emprestimos = [{
-            id: 0,
-            name: 'Ben Sparrow',
-            lastText: 'You on your way?',
-            face: 'img/ben.png'
-        }, {
-            id: 1,
-            name: 'Max Lynx',
-            lastText: 'Hey, it\'s me',
-            face: 'img/max.png'
-        }, {
-            id: 2,
-            name: 'Adam Bradleyson',
-            lastText: 'I should buy a boat',
-            face: 'img/adam.jpg'
-        }, {
-            id: 3,
-            name: 'Perry Governor',
-            lastText: 'Look at my mukluks!',
-            face: 'img/perry.png'
-        }, {
-            id: 4,
-            name: 'Mike Harrington',
-            lastText: 'This is wicked good ice cream.',
-            face: 'img/mike.png'
-        }];
+        var emprestimos = [];
 
         function emprestar(emprestimo) {
             var d = $q.defer();
@@ -39,9 +14,9 @@ angular.module('starter.services', [])
             return d.promise;
         }
 
-        function devolver(emprestimo) {
+        function devolver(id) {
             var d = $q.defer();
-            $http.post(ResourcesFactory.EMPRESTIMOS_API + 'emprestar/', emprestimo).then(function (response, $q) {
+            $http.get(ResourcesFactory.EMPRESTIMOS_API + 'devolver?emprestimoId=' + id).then(function (response, $q) {
                     d.resolve(response);
                 },
                 function (data) {
@@ -50,12 +25,24 @@ angular.module('starter.services', [])
             return d.promise;
         }
 
-        function all() {
+        function getList() {
             return emprestimos;
         }
 
         function remove(emprestimo) {
             emprestimos.splice(emprestimos.indexOf(emprestimo), 1);
+        }
+
+        function loadList() {
+            var d = $q.defer();
+            $http.get(ResourcesFactory.EMPRESTIMOS_API).then(function (response, $q) {
+                    d.resolve(response);
+                    emprestimos = response.data;
+                },
+                function (data) {
+                    d.reject(data);
+                });
+            return d.promise;
         }
 
         function get(emprestimoId) {
@@ -68,11 +55,12 @@ angular.module('starter.services', [])
         }
 
         return {
-            all: all,
+            getList: getList,
             remove: remove,
             get: get,
             emprestar: emprestar,
-            devolver: devolver
+            devolver: devolver,
+            loadList: loadList
         };
     })
 

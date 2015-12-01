@@ -41,10 +41,12 @@ angular.module('starter.controllers', [])
 
         vm.livro = '';
 
-        vm.emprestimos = EmprestimoService.all();
+        vm.loadList = function () {
+            return EmprestimoService.loadList();
+        };
 
-        vm.remove = function (emprestimo) {
-            EmprestimoService.remove(emprestimo);
+        vm.getEmprestimos = function () {
+            return EmprestimoService.getList();
         };
 
         vm.obtenhaLivro = function () {
@@ -75,9 +77,9 @@ angular.module('starter.controllers', [])
             });
         };
 
-        vm.devolverLivro = function () {
+        vm.devolverLivro = function (id) {
             vm.emprestimo = {livro: vm.livro, contaUsuario: LoginService.getUsuarioLogado()};
-            EmprestimoService.devolver(vm.emprestimo).then(function (response) {
+            EmprestimoService.devolver(id).then(function (response) {
                 vm.emprestimo = response.data;
             }, function (data) {
                 alert("Erro: " + data);
@@ -91,6 +93,8 @@ angular.module('starter.controllers', [])
         //        alert("Erro: " + data);
         //    });
         //};
+
+        vm.loadList();
     })
 
     .controller('EmprestimoDetalhesCtrl', function ($stateParams, EmprestimoService) {

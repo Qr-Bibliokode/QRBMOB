@@ -6,7 +6,7 @@
 
         <!-- Para testes sem precisar camera, descomentar também controllers.js:vm.buscaLivro -->
         <!--<button class="button button-calm col col-center" ng-click="vm.buscaLivro()">-->
-            <!--Ler Qr-Code do livro-->
+        <!--Ler Qr-Code do livro-->
         <!--</button>-->
 
         <div class="list card" ng-show="vm.livro != ''">
@@ -43,17 +43,15 @@
         </div>
 
         <ion-list>
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="emprestimo in vm.emprestimos"
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="emprestimo in vm.getEmprestimos()"
                       type="item-text-wrap" href="#/tab/emprestimos/{{emprestimo.id}}">
-                <img ng-src="{{emprestimo.face}}">
+                <h2>{{emprestimo.livro.titulo}}</h2>
 
-                <h2>{{emprestimo.name}}</h2>
-
-                <p>{{emprestimo.lastText}}</p>
+                <p>{{emprestimo.dataEmprestimo}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
 
-                <ion-option-button class="button-assertive" ng-click="vm.remove(emprestimo)">
-                    Delete
+                <ion-option-button class="button-positive" ng-click="vm.devolverLivro(emprestimo.id)">
+                    Devolver
                 </ion-option-button>
             </ion-item>
         </ion-list>
