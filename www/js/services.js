@@ -1,6 +1,7 @@
 angular.module('starter.services', [])
 
     .factory('EmprestimoService', function ($http, $q, ResourcesFactory) {
+        var emprestimo = '';
         var emprestimos = [];
 
         function emprestar(emprestimo) {
@@ -45,19 +46,22 @@ angular.module('starter.services', [])
             return d.promise;
         }
 
-        function get(emprestimoId) {
-            for (var i = 0; i < emprestimos.length; i++) {
-                if (emprestimos[i].id === parseInt(emprestimoId)) {
-                    return emprestimos[i];
-                }
-            }
-            return null;
+        function getById(emprestimoId) {
+            var d = $q.defer();
+            $http.get(ResourcesFactory.EMPRESTIMOS_API + emprestimoId).then(function (response, $q) {
+                    d.resolve(response);
+                    emprestimo = response.data;
+                },
+                function (data) {
+                    d.reject(data);
+                });
+            return d.promise;
         }
 
         return {
             getList: getList,
             remove: remove,
-            get: get,
+            getById: getById,
             emprestar: emprestar,
             devolver: devolver,
             loadList: loadList
@@ -121,7 +125,8 @@ angular.module('starter.services', [])
             DOMAIN_SERVER: resource,
             LIVROS_API: resource + 'api/livro/',
             CONTA_USUARIOS_API: resource + 'api/contaUsuario/',
-            EMPRESTIMOS_API: resource + 'api/emprestimo/'
+            EMPRESTIMOS_API: resource + 'api/emprestimo/',
+            ESTOQUE_API: resource + 'api/estoque/'
         };
     })
 
@@ -139,5 +144,23 @@ angular.module('starter.services', [])
 
         return {
             getById: getById
+        };
+    })
+
+    .factory('ConsultaFactory', function ($http, $q, ResourcesFactory) {
+        function consultaDisponibilidade(tituloLivro) {
+            debugger;
+            var d = $q.defer();
+            $http.get(ResourcesFactory.ESTOQUE_API + "consultaDisponibilidade?tituloLivro=" + tituloLivro).then(function (response, $q) {
+                    d.resolve(response);
+                },
+                function (data) {
+                    d.reject(data);
+                });
+            return d.promise;
+        }
+
+        return {
+            consultaDisponibilidade: consultaDisponibilidade
         };
     });

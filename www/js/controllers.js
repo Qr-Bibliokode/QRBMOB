@@ -100,12 +100,31 @@ angular.module('starter.controllers', [])
     .controller('EmprestimoDetalhesCtrl', function ($stateParams, EmprestimoService) {
         var vm = this;
 
-        vm.emprestimo = EmprestimoService.get($stateParams.emprestimoId);
+        vm.emprestimo = '';
+
+        vm.obtenhaEmprestimo = function () {
+            EmprestimoService.getById($stateParams.emprestimoId).then(function (response) {
+                vm.emprestimo = response.data;
+            }, function (data) {
+                alert("Erro: " + data);
+            });
+        };
+
+        vm.obtenhaEmprestimo();
     })
 
-    .controller('AccountCtrl', function ($scope) {
-        $scope.settings = {
-            enableFriends: true
+    .controller('ConsultaCtrl', function (ConsultaFactory) {
+        var vm = this;
+
+        vm.tituloLivro = '';
+        vm.estoques = [];
+
+        vm.consultaDisponibilidade = function(){
+            ConsultaFactory.consultaDisponibilidade(vm.tituloLivro).then(function (response) {
+                vm.estoques = response.data;
+            }, function (data) {
+                alert("Erro: " + data);
+            });
         };
     });
 

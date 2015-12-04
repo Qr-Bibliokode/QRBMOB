@@ -43,11 +43,16 @@
         </div>
 
         <ion-list>
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="emprestimo in vm.getEmprestimos()"
+            <ion-item class="item-remove-animate item-avatar item-icon-right"
+                      ng-repeat="emprestimo in vm.getEmprestimos()"
                       type="item-text-wrap" href="#/tab/emprestimos/{{emprestimo.id}}">
                 <h2>{{emprestimo.livro.titulo}}</h2>
 
-                <p>{{emprestimo.dataEmprestimo}}</p>
+                <!--TODO: Melhorar este ponto-->
+                <p>{{emprestimo.dataEmprestimo | date: 'dd/MM/yyyy'}} - <a
+                        ng-style="!emprestimo.dataDevolucao && {'color': 'red'}">
+                    {{!emprestimo.dataDevolucao ?
+                    'Ainda não foi devolvido' : emprestimo.dataDevolucao | date: 'dd/MM/yyyy'}}</a></p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
 
                 <ion-option-button class="button-positive" ng-click="vm.devolverLivro(emprestimo.id)">
