@@ -1,22 +1,25 @@
 <ion-view view-title="Consulta">
-    <ion-content class="padding">
-        <div class="list list-inset">
-            <label class="item item-input">
-                <i class="icon ion-search placeholder-icon"></i>
-                <input type="text" placeholder="Digite o título do livro" ng-model="vm.tituloLivro">
-            </label>
-            <button class="button button-calm col col-center" ng-click="vm.consultaDisponibilidade()">
-                Consultar disponibilidade
-            </button>
-        </div>
-        <div class="list list-inset">
-            <label class="item item-input">
-                <div ng-repeat="item in vm.estoques">
-                    <p>{{item.livro.titulo}} - {{item.disponivel}}</p>
-                </div>
-            </label>
-        </div>
+	<ion-content class="padding">
+		<ion-refresher
+				pulling-text="Puxe para atualizar"
+				on-refresh="vm.doRefresh()">
+		</ion-refresher>
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Digite o título do livro" ng-model="vm.tituloLivro">
+			</label>
+			<button class="button button-calm col col-center" ng-click="vm.consultaDisponibilidade()">
+				Consultar disponibilidade
+			</button>
+		</div>
+		<div class="list list-inset">
+			<label class="item item-input">
+				<div ng-repeat="item in vm.estoques">
+					<p>{{item.livro.titulo}} - {{item.disponivel}}</p>
+				</div>
+			</label>
+		</div>
 
-
-    </ion-content>
+	</ion-content>
 </ion-view>

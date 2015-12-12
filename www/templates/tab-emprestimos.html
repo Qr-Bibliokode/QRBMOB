@@ -1,64 +1,62 @@
 <ion-view view-title="Emprestimos">
-    <ion-content>
-        <button class="button button-calm col col-center" ng-click="vm.obtenhaLivro()">
-            Ler Qr-Code do livro
-        </button>
+	<ion-content>
+		<ion-refresher
+				pulling-text="Puxe para atualizar"
+				on-refresh="vm.doRefresh()">
+		</ion-refresher>
+		<button class="button button-calm col col-center" ng-click="vm.obtenhaLivro()">
+			Ler Qr-Code do livro
+		</button>
 
-        <!-- Para testes sem precisar camera, descomentar também controllers.js:vm.buscaLivro -->
-        <!--<button class="button button-calm col col-center" ng-click="vm.buscaLivro()">-->
-        <!--Ler Qr-Code do livro-->
-        <!--</button>-->
+		<div class="list card" ng-show="vm.livro != ''">
 
-        <div class="list card" ng-show="vm.livro != ''">
+			<div class="item item-thumbnail-left">
+				<img src="img/livros-sem-capa.jpg">
 
-            <div class="item item-thumbnail-left">
-                <img src="img/livros-sem-capa.jpg">
-                <!--Quando a capa for implementada no livro-->
-                <!--<img ng-src="{{vm.livro.capa}}" style="width: 64px; height: 64px">-->
+				<h2>{{vm.livro.titulo ? vm.livro.titulo : 'Título do livro desconhecido'}}</h2>
+				<hr>
+				<div ng-if="vm.livro.autores.length">
+					<li ng-repeat="autor in vm.livro.autores">
+						{{autor.nome}}
+					</li>
+				</div>
+				<div ng-if="!vm.livro.autores.length">
+					<li>Autor desconhecido</li>
+				</div>
+			</div>
 
-                <h2>{{vm.livro.titulo ? vm.livro.titulo : 'Título do livro desconhecido'}}</h2>
-                <hr>
-                <div ng-if="vm.livro.autores.length">
-                    <li ng-repeat="autor in vm.livro.autores">
-                        {{autor.nome}}
-                    </li>
-                </div>
-                <div ng-if="!vm.livro.autores.length">
-                    <li>Autor desconhecido</li>
-                </div>
-            </div>
+			<div class="item item-body">
+				<p>{{vm.livro.sinopse ? vm.livro.sinopse : 'Sem sinopsis cadastrada'}}</p>
 
-            <div class="item item-body">
-                <p>{{vm.livro.sinopse ? vm.livro.sinopse : 'Sem sinopsis cadastrada'}}</p>
+				<p>
+					<a href="#" class="subdued">{{vm.livro.comentarios.length}} Comentários</a>
+				</p>
+			</div>
 
-                <p>
-                    <a href="#" class="subdued">{{vm.livro.comentarios.length}} Comentários</a>
-                </p>
-            </div>
+			<div class="item tabs tabs-secondary tabs-icon-left">
+				<a class="tab-item" href="#" ng-click="vm.emprestarLivro()"><i
+						class="icon ion-ios-download"></i>Locar</a>
+			</div>
+		</div>
 
-            <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item" href="#" ng-click="vm.emprestarLivro()"><i
-                        class="icon ion-ios-download"></i>Locar</a>
-            </div>
-        </div>
+		<ion-list>
+			<ion-item class="item-remove-animate item-avatar item-icon-right"
+			          ng-repeat="emprestimo in vm.getEmprestimos()"
+			          type="item-text-wrap" href="#/tab/emprestimos/{{emprestimo.id}}">
+				<h2>{{emprestimo.livro.titulo}}</h2>
 
-        <ion-list>
-            <ion-item class="item-remove-animate item-avatar item-icon-right"
-                      ng-repeat="emprestimo in vm.getEmprestimos()"
-                      type="item-text-wrap" href="#/tab/emprestimos/{{emprestimo.id}}">
-                <h2>{{emprestimo.livro.titulo}}</h2>
+				<p>{{emprestimo.dataEmprestimo | date: 'dd/MM/yyyy'}} -
+					<a ng-style="!emprestimo.dataDevolucao && {'color': 'red'}">
+						{{!emprestimo.dataDevolucao ?
+						'Ainda não foi devolvido' : emprestimo.dataDevolucao | date: 'dd/MM/yyyy'}}
+					</a>
+				</p>
+				<i class="icon ion-chevron-right icon-accessory"></i>
 
-                <!--TODO: Melhorar este ponto-->
-                <p>{{emprestimo.dataEmprestimo | date: 'dd/MM/yyyy'}} - <a
-                        ng-style="!emprestimo.dataDevolucao && {'color': 'red'}">
-                    {{!emprestimo.dataDevolucao ?
-                    'Ainda não foi devolvido' : emprestimo.dataDevolucao | date: 'dd/MM/yyyy'}}</a></p>
-                <i class="icon ion-chevron-right icon-accessory"></i>
-
-                <ion-option-button class="button-positive" ng-click="vm.devolverLivro(emprestimo.id)">
-                    Devolver
-                </ion-option-button>
-            </ion-item>
-        </ion-list>
-    </ion-content>
+				<ion-option-button class="button-positive" ng-click="vm.devolverLivro(emprestimo.id)">
+					Devolver
+				</ion-option-button>
+			</ion-item>
+		</ion-list>
+	</ion-content>
 </ion-view>
