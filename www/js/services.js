@@ -117,8 +117,8 @@ angular.module('starter.services', [])
 		})
 
 		.factory('ResourcesFactory', function () {
-			//var resource = 'http://192.168.0.17:8080/'; // Use este endereço para rodar localmente
-			var resource = 'http://ws.qrbcode.com.br:8080/';
+			var resource = 'http://192.168.0.17:8080/'; // Use este endereço para rodar localmente
+			//var resource = 'http://ws.qrbcode.com.br:8080/';
 
 
 			return {
@@ -149,7 +149,6 @@ angular.module('starter.services', [])
 
 		.factory('ConsultaFactory', function ($http, $q, ResourcesFactory) {
 			function consultaDisponibilidade(tituloLivro) {
-				debugger;
 				var d = $q.defer();
 				$http.get(ResourcesFactory.ESTOQUE_API + "consultaDisponibilidade?tituloLivro=" + tituloLivro).then(function (response, $q) {
 							d.resolve(response);

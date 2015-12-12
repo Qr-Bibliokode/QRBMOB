@@ -1,72 +1,70 @@
 <ion-view view-title="{{vm.emprestimo.livro.titulo}}">
 	<ion-content class="padding">
 
-		<div class="list">
-			<a class="item item-thumbnail-left" href="#">
+		<div class="list list-inset">
 
-				<p class="item item-divider">
-					EMPRESTIMO
-				</p>
+			<p class="item item-divider">
+				EMPRESTIMO
+			</p>
 
-				<p class="item">
-					Data de emprestimo: {{vm.emprestimo.dataEmprestimo | date: 'dd-MM-yyyy'}}
-				</p>
+			<p class="item">
+				Data de emprestimo: {{vm.emprestimo.dataEmprestimo | date: 'dd-MM-yyyy'}}
+			</p>
 
-				<p class="item">
-					Data de devolução: {{vm.emprestimo.dataDevolucao | date: 'dd-MM-yyyy'}}
-				</p>
+			<p class="item">
+				Data de devolução: {{vm.emprestimo.dataDevolucao | date: 'dd-MM-yyyy'}}
+			</p>
 
-				<p class="item">
-					Data limite da devolução: {{vm.emprestimo.dataDevolucao | date: 'dd-MM-yyyy'}}
-				</p>
+			<p class="item">
+				Data limite da devolução: {{vm.emprestimo.dataLimiteDevolucao | date: 'dd-MM-yyyy'}}
+			</p>
 
-				<p class="item">
-					Já foi avisado da data de devolução ? {{vm.emprestimo.avisado ? 'Sim' : 'Não'}}
-				</p>
+			<p class="item">
+				Já foi avisado da data de devolução ? {{vm.emprestimo.avisado ? 'Sim' : 'Não'}}
+			</p>
 
-				<p class="item">
-					Renovações realizadas: {{vm.emprestimo.renovacoes}}
-				</p>
+			<p class="item">
+				Renovações realizadas: {{vm.emprestimo.renovacoes}}
+			</p>
 
-				<div class="item item-divider">
-					LIVRO
-				</div>
+			<div class="item item-divider">
+				LIVRO
+			</div>
 
-				<p class="item">
-					Idioma: {{vm.emprestimo.livro.idioma.descricao ? vm.emprestimo.livro.idioma.descricao : ' - '}}
-				</p>
+			<p class="item">
+				Idioma: {{vm.emprestimo.livro.idioma.descricao ? vm.emprestimo.livro.idioma.descricao : ' - '}}
+			</p>
 
-				<p class="item">
-					ISBN: {{vm.emprestimo.livro.isbn ? vm.emprestimo.livro.isbn : ' - '}}
-				</p>
+			<p class="item">
+				ISBN: {{vm.emprestimo.livro.isbn ? vm.emprestimo.livro.isbn : ' - '}}
+			</p>
 
-				<p class="item">
-					Título: {{vm.emprestimo.livro.titulo ? vm.emprestimo.livro.titulo : ' - '}}
-				</p>
+			<p class="item">
+				Título: {{vm.emprestimo.livro.titulo ? vm.emprestimo.livro.titulo : ' - '}}
+			</p>
 
-				<p class="item">
-					Sinopse: {{vm.emprestimo.livro.sinopse ? vm.emprestimo.livro.sinopse : ' - '}}
-				</p>
+			<p class="item">
+				Sinopse: {{vm.emprestimo.livro.sinopse ? vm.emprestimo.livro.sinopse : ' - '}}
+			</p>
 
-				<p class="item">
-					Paginas: {{vm.emprestimo.livro.paginas ? vm.emprestimo.livro.paginas : ' - '}}
-				</p>
+			<p class="item">
+				Paginas: {{vm.emprestimo.livro.paginas ? vm.emprestimo.livro.paginas : ' - '}}
+			</p>
 
-				<p class="item">
-					Categoria: {{vm.emprestimo.livro.categoria.descricao ? vm.emprestimo.livro.categoria.descricao : ' -
-					'}}
-				</p>
+			<p class="item">
+				Categoria: {{vm.emprestimo.livro.categoria.descricao ? vm.emprestimo.livro.categoria.descricao : ' -
+				'}}
+			</p>
 
-				<p class="item">
-					Autores: <b style="font-weight: normal;" ng-repeat="autor in vm.emprestimo.livro.autores">{{autor.nome}}{{$last
-					? '' : ', '}}</b>
-					{{vm.emprestimo.livro.autores.length == 0 ? ' - ' : ''}}
-				</p>
+			<p class="item">
+				Autores: <b style="font-weight: normal;" ng-repeat="autor in vm.emprestimo.livro.autores">{{autor.nome}}{{$last
+				? '' : ', '}}</b>
+				{{vm.emprestimo.livro.autores.length == 0 ? ' - ' : ''}}
+			</p>
 
-				<p class="item">
-					Comentarios: {{vm.emprestimo.livro.comentarios.length}}
-				</p>
-			</a>
+			<p class="item">
+				Comentarios: {{vm.emprestimo.livro.comentarios.length}}
+			</p>
 		</div>
 	</ion-content>
 </ion-view>

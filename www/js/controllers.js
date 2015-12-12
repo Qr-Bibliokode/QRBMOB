@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-		.controller('LoginCtrl', function ($scope, LoginService) {
+		.controller('LoginCtrl', function ($scope, LoginService, AlertFactory) {
 			var vm = this;
 			vm.user = '';
 
@@ -11,23 +11,19 @@ angular.module('starter.controllers', [])
 			vm.login = function () {
 				LoginService.validaUsuario(vm.user).then(function (result) {
 					vm.user = result.data;
-					if (!vm.user.username) {
-						console.log('Este usuário não está cadastrado no sistema');
-					} else {
-						console.log("Usuário logado");
-						LoginService.logado(true);
-						LoginService.setUsuarioLogado(vm.user);
-						console.log(LoginService.isLogado())
-					}
+					LoginService.logado(true);
+					LoginService.setUsuarioLogado(vm.user);
+					AlertFactory.success("Bem-vindo " + vm.user.pessoa.nome);
 				}, function (response) {
-					console.log(response)
+					AlertFactory.grailsError(response.data);
 				});
 			};
 
 			vm.logout = function () {
 				LoginService.logout().then(function (data) {
+					AlertFactory.success("Volte sempre !");
 				}, function (response) {
-					console.log(response.data);
+					AlertFactory.grailsError(response.data);
 				});
 			};
 
@@ -36,7 +32,7 @@ angular.module('starter.controllers', [])
 			};
 		})
 
-		.controller('EmprestimosCtrl', function (EmprestimoService, LivroFactory, LoginService, $scope) {
+		.controller('EmprestimosCtrl', function (EmprestimoService, LivroFactory, LoginService, $scope, AlertFactory) {
 			var vm = this;
 
 			vm.livro = '';
@@ -54,16 +50,16 @@ angular.module('starter.controllers', [])
 						function (result) {
 							buscaLivro(result.text);
 						},
-						function (error) {
-							alert("Opa! Um erro aconteceu: " + error);
+						function (response) {
+							AlertFactory.grailsError(response.data);
 						}
 				);
 
 				function buscaLivro(codigo) {
 					LivroFactory.getById(codigo).then(function (response) {
 						vm.livro = response.data;
-					}, function (data) {
-						alert("Erro: " + data);
+					}, function (response) {
+						AlertFactory.grailsError(response.data);
 					});
 				}
 			};
@@ -72,8 +68,9 @@ angular.module('starter.controllers', [])
 				vm.emprestimo = {livro: vm.livro, contaUsuario: LoginService.getUsuarioLogado()};
 				EmprestimoService.emprestar(vm.emprestimo).then(function (response) {
 					vm.emprestimo = response.data;
-				}, function (data) {
-					alert("Erro: " + data);
+					AlertFactory.success("Foi enviada uma solicitação de empréstimo.");
+				}, function (response) {
+					AlertFactory.grailsError(response.data);
 				});
 			};
 
@@ -81,8 +78,9 @@ angular.module('starter.controllers', [])
 				vm.emprestimo = {livro: vm.livro, contaUsuario: LoginService.getUsuarioLogado()};
 				EmprestimoService.devolver(id).then(function (response) {
 					vm.emprestimo = response.data;
-				}, function (data) {
-					alert("Erro: " + data);
+					AlertFactory.success("Foi enviada uma solicitação de devolução.");
+				}, function (response) {
+					AlertFactory.grailsError(response.data);
 				});
 			};
 
@@ -92,18 +90,10 @@ angular.module('starter.controllers', [])
 				});
 			};
 
-			//vm.buscaLivro = function () {
-			//    LivroFactory.getById(4).then(function (response) {
-			//        vm.livro = response.data;
-			//    }, function (data) {
-			//        alert("Erro: " + data);
-			//    });
-			//};
-
 			vm.loadList();
 		})
 
-		.controller('EmprestimoDetalhesCtrl', function ($stateParams, EmprestimoService) {
+		.controller('EmprestimoDetalhesCtrl', function ($stateParams, EmprestimoService, AlertFactory) {
 			var vm = this;
 
 			vm.emprestimo = '';
@@ -111,8 +101,8 @@ angular.module('starter.controllers', [])
 			vm.obtenhaEmprestimo = function () {
 				EmprestimoService.getById($stateParams.emprestimoId).then(function (response) {
 					vm.emprestimo = response.data;
-				}, function (data) {
-					alert("Erro: " + data);
+				}, function (response) {
+					AlertFactory.grailsError(response.data);
 				});
 			};
 
@@ -120,7 +110,7 @@ angular.module('starter.controllers', [])
 
 		})
 
-		.controller('ConsultaCtrl', function (ConsultaFactory) {
+		.controller('ConsultaCtrl', function (ConsultaFactory, AlertFactory) {
 			var vm = this;
 
 			vm.tituloLivro = '';
@@ -129,14 +119,8 @@ angular.module('starter.controllers', [])
 			vm.consultaDisponibilidade = function () {
 				ConsultaFactory.consultaDisponibilidade(vm.tituloLivro).then(function (response) {
 					vm.estoques = response.data;
-				}, function (data) {
-					alert("Erro: " + data);
-				});
-			};
-
-			vm.doRefresh = function () {
-				vm.consultaDisponibilidade().finally(function () {
-					$scope.$broadcast('scroll.refreshComplete');
+				}, function (response) {
+					AlertFactory.grailsError(response.data);
 				});
 			};
 		});
